@@ -54,7 +54,8 @@ const buttonSX = {
   },
 };
 
-function ItemsForTrade({ setAddItem, addItem }) {
+function ItemsForTrade({ changeView, user, itemsData, setAddItem, addItem }) {
+
   const handleClick = () => {
     console.log('clicked');
     setAddItem(!addItem);
@@ -62,7 +63,10 @@ function ItemsForTrade({ setAddItem, addItem }) {
   return (
       <Box1 >
         <Title sx={{color: '#505050',}}>Items for Trade</Title>
-        <ItemEntry />
+
+        {itemsData.map((item, key) => <ItemEntry changeView={changeView} user={user} item={item} setAddItem={setAddItem} addItem={addItem} key={key} />)
+        }
+
         <Box2>
         <AddButton sx={buttonSX} onClick={handleClick} variant="contained" endIcon={<AddIcon />}>
         Add Item

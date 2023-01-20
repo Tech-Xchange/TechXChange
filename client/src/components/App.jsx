@@ -5,6 +5,7 @@ import Profile from './ProfilePage';
 import Map1 from './SearchPage/Map';
 import Item from './itemDetails';
 import SearchPage from './SearchPage/index.jsx';
+import Item from './itemDetails';
 
 export default function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user') ?? 'null'));
@@ -26,9 +27,11 @@ const [view, setView] = useState({ name: 'Auth', props: { setUser } });
       case 'Map':
         return <Map1 />;
       case 'Search':
-        return <SearchPage changeView={changeView} props={view.props}/>;
-      case 'ItemDetails':
-        return <Item changeView={changeView} props={view.props}/>;
+
+        return <SearchPage />
+        case 'ItemDetails':
+          return <Item changeView={changeView} props={view.props}/>;
+
       default:
         return null;
     }
@@ -37,3 +40,7 @@ const [view, setView] = useState({ name: 'Auth', props: { setUser } });
 
   return renderView();
 }
+
+// COLOR PALETTE
+//#03045E #0077B6 #00B4D8 #90E0EF # CAF0F8
+

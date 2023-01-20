@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import Search from './Search.jsx';
 
-const SearchPage = () => {
+const SearchPage = ({ changeView }) => {
   return (
     <div>
-      < Search />
+      < Search changeView={changeView} />
     </div>
   )
 };

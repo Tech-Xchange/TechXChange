@@ -3,11 +3,12 @@ import axios from 'axios';
 import Auth from './Auth';
 import Profile from './ProfilePage';
 import Map1 from './SearchPage/Map';
+import Item from './itemDetails';
 import SearchPage from './SearchPage/index.jsx';
 
 export default function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user') ?? 'null'));
-  const [view, setView] = useState({ name: 'Auth', props: { setUser } });
+const [view, setView] = useState({ name: 'Auth', props: { setUser } });
 
   const changeView = (viewName, viewProps, isCallback = false) => (
     !isCallback ? setView({ name: viewName, props: viewProps })
@@ -21,11 +22,13 @@ export default function App() {
         changeView('Profile', { user, changeView });
         break;
       case 'Profile':
-        return <Profile user={user} changeView={changeView} props={view.props} />;
+        return <Profile changeView={changeView} props={view.props}/>;
       case 'Map':
         return <Map1 />;
       case 'Search':
-        return <SearchPage />
+        return <SearchPage changeView={changeView} props={view.props}/>;
+      case 'ItemDetails':
+        return <Item changeView={changeView} props={view.props}/>;
       default:
         return null;
     }
@@ -34,7 +37,3 @@ export default function App() {
 
   return renderView();
 }
-
-
-// COLOR PALETTE
-//#03045E #0077B6 #00B4D8 #90E0EF # CAF0F8

@@ -59,17 +59,37 @@ module.exports = {
       res.status(200).send(results);
     })
 
-      // try {
-      //   const conn = await db.pool.getConnection();
-      //   const [results] = await conn.query(qString);
-      //   // console.log('results', results);
+  },
 
-      //   res.status(200).send('updated?');
-      // } catch (err) {
-      //   res.status(500).send(err);
-      // }
+  updateOwners: async function(req,res) {
+    //tradeID/:newStatus
+    const userA = req.params.userA;
+    const itemA = req.params.itemA;
+    const userB = req.params.userB;
+    const itemB = req.params.itemB;
+
+
+    const qString1 = `UPDATE devices SET user_id='${userA}' WHERE id=${itemB};`;
+    const qString2 = `UPDATE devices SET user_id='${userB}' WHERE id=${itemA};`;
+    db.query(qString1, function(err, results) {
+      if(err) {
+        console.log(err);
+        res.status(500).send(err);
+        return;
+      }
+      db.query(qString2, function(err, results) {
+        if(err) {
+          console.log(err);
+          res.status(500).send(err);
+          return;
+        }
+        // console.log('promise style results\n', results);
+        res.status(200).send('updated owners?');
+      })
+    })
 
   },
+
   createNewTrade: async (req, res) => {
     const { body: data } = req;
     let query = `INSERT INTO trades (proposer_id, proposer_device_id, receiver_id, receiver_device_id, status) VALUES (${data.proposer_id}, ${data.proposer_device_id}, ${data.receiver_id}, ${data.receiver_device_id}, "${data.status}");`;

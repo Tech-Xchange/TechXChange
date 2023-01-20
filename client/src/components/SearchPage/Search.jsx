@@ -4,42 +4,59 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import HomeIcon from '@mui/icons-material/Home';
+import ItemCard from './ItemCard.jsx';
+import List from './List.jsx';
+import MapIcon from '@mui/icons-material/Map';
 
-export default function Search() {
+export default function Search({ changeView }) {
   const [category, setCategory] = React.useState('');
   const [condition, setCondition] = React.useState('');
   const handleChange = (event) => {
     setCategory(event.target.value);
+    // console.log(category);
   };
 
   const handleChange2 = (event) => {
     setCondition(event.target.value);
+    console.log(condition);
+    // console.log(condition);
   };
 
+  const mapClick = (event) => {
+    changeView('Map', {});
+  }
+
+  const homeClick = (event) => {
+    changeView('Profile', {});
+  }
   // const [allItems, setAllItems] = useState([]);
   // const [allUsers, setAllUsers] = useState([]);
 
   // useEffect(() => {
   //   axios.get('http://localhost:8080/devices')
   //     .then((response) => {
-  //       setAllItems(response);
+  //       // setAllItems(response);
   //     }).catch((error) => {
   //       console.log(error);
   //     });
 
-  //   axios.get('http://localhost:8080/users')
-  //     .then((response) => {
-  //       setAllUsers(response);
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
+  // //   axios.get('http://localhost:8080/users')
+  // //     .then((response) => {
+  // //       setAllUsers(response);
+  // //     }).catch((error) => {
+  // //       console.log(error);
+  // //     });
   // }, []);
 
   return (
     <Container id="search">
       <Box id="topButtons">
         <IconButton id="homeButton">
-          <HomeIcon />
+          <HomeIcon onClick={homeClick} />
+        </IconButton>
+
+        <IconButton id="mapButton">
+          <MapIcon onClick={mapClick} />
         </IconButton>
       </Box>
 
@@ -74,16 +91,18 @@ export default function Search() {
               marginBottom: '.5em',
             }}
           >
-            <MenuItem value="mint">Mint</MenuItem>
             <MenuItem value="new">New</MenuItem>
-            <MenuItem value="worn">Worn</MenuItem>
+            <MenuItem value="openBox">Open Box</MenuItem>
+            <MenuItem value="likeNew">Like New</MenuItem>
+            <MenuItem value="good">Good</MenuItem>
+            <MenuItem value="fair">Fair</MenuItem>
             <MenuItem value="broken">Broken</MenuItem>
           </Select>
         </FormControl>
       </Box>
 
       <Box id="results">
-        Item Components
+        <List changeView={changeView} condition={condition} />
       </Box>
     </Container>
   );

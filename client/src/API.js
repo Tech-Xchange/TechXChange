@@ -88,6 +88,18 @@ export function getUserFromID(userID) {
     })
   })//end Promise
 }
+
+export function updateOwners(userA, itemA, userB, itemB) {
+  return new Promise((resolve,reject) => {
+    axiosCall('put', `/update/owners/${userA}/${itemA}/${userB}/${itemB}`)
+    .then(res => {
+      resolve(res);
+    })
+    .catch(err => {
+      reject(err);
+    })
+  })//end Promise
+}
 export function getTradeFromID(tradeID) {
   return new Promise((resolve,reject) => {
     axiosCall('get', `/trade/${tradeID}`)
@@ -111,11 +123,15 @@ export function getAllUsers() {
   })//end Promise
 }
 
-export function updateTradeFromID(tradeID, currentTradeStatus) {
+export function updateTradeFromID(tradeID, currentTradeStatus, isTerminate) {
   const statusList = ['proposed', 'approved', 'completed'];
   var newStatus = statusList[statusList.indexOf(currentTradeStatus) + 1];
+  if(isTerminate) { newStatus = 'terminated'};
   return new Promise((resolve,reject) => {
-    if(currentTradeStatus === 'completed') {resolve(currentTradeStatus);  return};
+    if(currentTradeStatus === 'completed' && !isTerminate) {
+      resolve(currentTradeStatus);
+      return;
+    };
 
     axiosCall('put', `/trade/status/${tradeID}/${newStatus}`)
     .then(res => {

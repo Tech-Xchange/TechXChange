@@ -16,6 +16,9 @@ router.post('/users/auth', Users.authUser);
 router.get('/map', Map.getMap);
 
 router.post('/trades/involved', Trades.getInvolvedTrades); //WORKING
+
+router.put('/update/owners/:userA/:itemA/:userB/:itemB', Trades.updateOwners);//Working
+
 router.get('/trade/:tradeID', Trades.getTradeFromID); //..........
 router.get('/item/:itemID', Shared.getItemFromID); //WORKING
 router.get('/items/user/:userID', Shared.getItemsFromUserID); //WORKING

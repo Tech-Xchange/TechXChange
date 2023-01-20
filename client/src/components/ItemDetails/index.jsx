@@ -9,7 +9,10 @@ import * as API from '../../API.js';
 import ProposeTradeForm from './ProposeTradeForm';
 import {styled} from '@mui/system';
 
+
 function Item({props}) {
+
+
   const [itemId, setItemId] = useState();
   const [itemPhoto, setItemPhoto] = useState('');
   const [itemTitle, setItemTitle] = useState('');
@@ -119,7 +122,6 @@ function Item({props}) {
   };
 
   useEffect(() => {
-    console.log('PROPS ARE ', props)
 
     API.getItemFromID(props.currentItemId)
       .then((response) => {
@@ -133,7 +135,9 @@ function Item({props}) {
       }).catch((error) => {
         console.log(error);
       });
+
   }, [props.currentItemId]);
+
 
   useEffect(() => {
     API.getUserFromID(userId)
